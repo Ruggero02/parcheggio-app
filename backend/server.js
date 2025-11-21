@@ -64,9 +64,9 @@ app.post('/api/parcheggio', async (req, res) => {
     
     try {
         // Manteniamo solo l'ultima posizione: rimuoviamo eventuali righe precedenti
-        // e inseriamo la nuova posizione. In alternativa si può usare UPSERT.
         await pool.query('DELETE FROM parcheggi');
 
+        // La sintassi per i parametri in 'pg' usa $1, $2 invece di ?
         const insertQuery = 'INSERT INTO parcheggi (latitude, longitude) VALUES ($1, $2) RETURNING *';
         const result = await pool.query(insertQuery, [latitude, longitude]);
 
